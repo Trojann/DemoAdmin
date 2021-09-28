@@ -1,0 +1,47 @@
+{
+    "env": {
+        "node": true,
+        "browser": true,
+        "mocha": true,
+        "es6": true
+    },
+    "parser": "babel-eslint",
+    "extends": [ "eslint:recommended", "plugin:react/recommended" ],
+    "parserOptions": {
+        ecmaVersion: 6,
+        ecmaFeatures: {
+            jsx: true,
+        },
+        "sourceType": "module"
+    },
+    "rules": {
+        "react/jsx-indent": [2, 4],
+        "react/jsx-indent-props": [2, 4],
+        "indent": [
+            "error",
+            4
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-console": [
+            "off"
+        ],
+        "no-case-declarations": [
+            "off"
+        ],
+        "react/display-name": [0, { "ignoreTranspilerName": true }]
+    },
+    "globals": {
+        "define": true,
+        "$": true
+    },
+    "plugins": [
+        "react"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Demo API",
+  "version": "1.0.0",
+  "description": "Demo API",
+  "title": "Demo API",
+  "url" : "http://localhost:8080",
+  "sampleUrl": "http://localhost:8080",
+  "header": {
+  	"title": "API"
+  }
+}

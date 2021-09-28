@@ -1,0 +1,7 @@
+/doc/
+/dist/
+/node_modules/
+/log/
+/build/
+*.log
+/chunkhash.json

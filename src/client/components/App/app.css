@@ -1,0 +1,34 @@
+#app {
+    height: 100%;
+    width: 100%;
+}
+
+#app [data-component='App'] {
+    position: relative;
+    height: 100%;
+    width: 100%
+}
+
+#app .alert.bg-danger-400 {
+    margin-bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
+#app .pointer {
+	cursor: pointer;
+}
+
+#app .btn-xxs {
+	padding: 0 5px 0 2px;
+}
+
+#app .btn-xxs [class^="icon-"], #app .btn-xxs [class*=" icon-"] {
+	font-size: 15px;
+}
+
+#app .btn-xxs .position-left {
+	margin-right: 5px;
+}
+
+
