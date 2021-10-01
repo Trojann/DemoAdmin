@@ -1,17 +1,13 @@
 var fs = require('fs');
-
-function SaveHashPlugin() {
-    
+class SaveHashPlugin {
+    apply(compiler) {
+        compiler.hooks.done.tap('emit', (compilation) => {
+            const json = JSON.stringify({ chunkhash: compilation.hash });
+            fs.writeFile('chunkhash.json', json, 'utf8', (error) => {
+                if (error) console.error(error);
+                console.log('=============HASH SAVED=================', compilation.hash);
+            });
+        });
+    }
 }
-
-SaveHashPlugin.prototype.apply = function(compiler) {
-
-    compiler.plugin('emit', (compilation, callback)=> {
-        //console.log('tesssssssssst', compilation.hash);
-        var json = JSON.stringify({chunkhash: compilation.hash});
-        fs.writeFile('chunkhash.json', json, 'utf8', callback);
-        callback();
-    });
-};
-
 module.exports = SaveHashPlugin;

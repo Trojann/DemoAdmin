@@ -8,7 +8,6 @@ import ActionForm from 'elements/ActionForm';
 import {TextInput, PasswordInput} from 'elements';
 
 import Select from 'react-select';
-import 'react-select/dist/react-select.css';
 
 class AccountActionForm extends ActionForm {
 

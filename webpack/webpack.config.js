@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var pkg = require('../package.json');
 var format = require('string-template');
-var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+var TerserPlugin = require('terser-webpack-plugin');
 var SaveHashPlugin = require('./webpack-savehash-plugin');
 
 var today = new Date();
@@ -10,7 +10,7 @@ var banner = format('{name} - v{version} - {today} \n    Author: {author} - vxth
     name: pkg.name,
     version: pkg.version,
     today: today.toLocaleString(),
-    author: pkg.author
+    author: pkg.author,
 });
 
 var config = {
@@ -18,12 +18,12 @@ var config = {
     entry: {
         c: './src/client/',
         r: ['react', 'react-dom', 'react-router'],
-        l: ['underscore', 'store']
+        l: ['underscore', 'store'],
     },
     output: {
         path: path.join(__dirname, '../build/temp'),
         filename: '[name].[hash].js',
-        chunkFilename:'[name].[hash].js'
+        chunkFilename: '[name].[hash].js',
     },
     resolve: {
         extensions: ['.js', '.json', '.jsx', '.css'],
@@ -33,33 +33,43 @@ var config = {
             components: path.resolve('./src/client/components'),
             elements: path.resolve('./src/client/elements'),
             core: path.resolve('./src/client/core'),
-            utils: path.resolve('./src/client/utils')
-        }
+            utils: path.resolve('./src/client/utils'),
+        },
+    },
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                extractComments: { banner },
+            }),
+        ],
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': '"production"'
+            'process.env': {
+                NODE_ENV: JSON.stringify('production'),
+                BASE_URL: JSON.stringify('http://localhost:8080/'),
+            },
         }),
-        new UglifyJSPlugin({
-            extractComments: {
-                banner: banner
-            }
-        }),
-        new SaveHashPlugin()
+        new SaveHashPlugin(),
     ],
     module: {
-        rules: [{
-            test: /\.js|\.jsx?$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader'
-        },{
-            test: /\.css|\.scss?$/,
-            loader: 'style-loader!css-loader'
-        },{ 
-            test: /\.(jpg|png|woff|woff2|eot|ttf|svg)$/, 
-            loader: 'file-loader?limit=100000' 
-        }]
-    }
+        rules: [
+            {
+                test: /\.js|\.jsx?$/,
+                exclude: /node_modules/,
+                use: 'babel-loader',
+            },
+            {
+                test: /\.css|\.scss?$/,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(jpg|png|woff|woff2|eot|ttf|svg)$/,
+                use: 'file-loader?limit=100000',
+            },
+        ],
+    },
 };
 
 module.exports = config;
